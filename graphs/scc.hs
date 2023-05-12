@@ -25,6 +25,9 @@ buildGraph bounds neighbors = accumArray (flip (:)) [] bounds neighbors
 transpose:: Graph -> Graph
 transpose g = buildGraph (bounds g) ([(a, b) | (b, a) <- edges g])
 
+removeVertex:: Graph -> Char -> Graph
+removeVertex g v = buildGraph (bounds g) [(a, b) | (a, b) <- edges g, not (a==v), not(a==b)]
+
 -- postOrderF :: Tree a -> [a]
 -- postOrderF (Node a f) = (concat [postOrder t | t <- f]) ++ a
 
@@ -184,3 +187,11 @@ dfsAll g (x:xs) visitedSet components =
             new_components = components ++ [Set.toList diff]
         in dfsAll g xs visitedSet2 new_components
 
+{-
+findCentroid :: Graph -> Char -> Char -> Char
+findCentroid g, v, parent =
+    | g!v == [] = v
+    | otherwise = 
+        let (u, sz) = maxNeighborSize g v parent
+        if sz >
+-}
